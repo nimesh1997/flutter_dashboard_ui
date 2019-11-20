@@ -10,6 +10,19 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   bool isDrawerOpen = false;
   int currentPageIndex = 0;
+  PageController _controller;
+
+  @override
+  void initState() {
+    _controller = PageController(initialPage: currentPageIndex, keepPage: false, viewportFraction: 0.9);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -155,48 +168,27 @@ class _HomeScreenState extends State<HomeScreen> {
 
   _buildPageCarousel() {
     return Container(
-        height: 200.0,
+        height: 250.0,
         decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(20.0))),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Container(
-              margin: EdgeInsets.only(top: 10.0),
-              height: 160.0,
-              child: PageView(
-                physics: BouncingScrollPhysics(),
-                controller: PageController(
-                  initialPage: currentPageIndex,
-                  viewportFraction: 0.9,
-                ),
-                onPageChanged: (pageIndex) {
-                  print('onChangedPageIndex: ' + pageIndex.toString());
-                  setState(() {
-                    currentPageIndex = pageIndex;
-                  });
-                },
-                children: <Widget>[
-                  Container(
-                      margin: EdgeInsets.only(right: 10.0),
-                      width: 100.0,
-                      height: 100.0,
-                      decoration: BoxDecoration(color: Colors.deepPurpleAccent, borderRadius: BorderRadius.all(Radius.circular(20.0)))),
-                  Container(
-                    margin: EdgeInsets.only(right: 10.0),
-                    width: 100.0,
-                    height: 100.0,
-                    decoration: BoxDecoration(color: Colors.greenAccent, borderRadius: BorderRadius.all(Radius.circular(20.0))),
-                  ),
-                  Container(
-//                    margin: EdgeInsets.only(left: 20.0),
-                    width: 100.0,
-                    height: 100.0,
-                    decoration: BoxDecoration(color: Colors.amberAccent, borderRadius: BorderRadius.all(Radius.circular(20.0))),
-                  )
-                ],
-              ),
-            ),
+                margin: EdgeInsets.only(top: 10.0),
+                height: 180.0,
+                child: PageView.builder(
+                    itemCount: 3,
+                    onPageChanged: (page) {
+                      setState(() {
+                        currentPageIndex = page;
+                      });
+                    },
+                    physics: BouncingScrollPhysics(),
+                    controller: _controller,
+                    itemBuilder: (BuildContext context, int index) {
+                      return _buildCarouselContainer(index);
+                    })),
             SizedBox(
               height: 10.0,
             ),
@@ -221,11 +213,33 @@ class _HomeScreenState extends State<HomeScreen> {
         ));
   }
 
-  _buildSingleDot(Color color) {
-    return Container(
-      width: 10.0,
-      height: 10.0,
-      decoration: BoxDecoration(shape: BoxShape.circle, color: color),
+  _buildCarouselContainer(int index) {
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (BuildContext context, Widget child) {
+        double val = 1.0;
+        if (_controller.position.haveDimensions) {
+          val = _controller.page - index;
+          val = (1 - (val.abs() * 0.1)).clamp(0.0, 1.0);
+        }
+        return Center(
+          child: SizedBox(
+            height: val * 150.0,
+            child: child,
+          ),
+        );
+      },
+      child: Container(
+          margin: (index != 0 || index != 2) ? EdgeInsets.only(right: 10.0) : EdgeInsets.all(0.0),
+          decoration: BoxDecoration(color: Colors.deepPurpleAccent, borderRadius: BorderRadius.all(Radius.circular(20.0)))),
     );
   }
+}
+
+_buildSingleDot(Color color) {
+  return Container(
+    width: 10.0,
+    height: 10.0,
+    decoration: BoxDecoration(shape: BoxShape.circle, color: color),
+  );
 }
