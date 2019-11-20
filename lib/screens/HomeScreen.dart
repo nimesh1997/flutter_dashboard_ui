@@ -11,10 +11,11 @@ class _HomeScreenState extends State<HomeScreen> {
   bool isDrawerOpen = false;
   int currentPageIndex = 0;
   PageController _controller;
+  Size size;
 
   @override
   void initState() {
-    _controller = PageController(initialPage: currentPageIndex, keepPage: false, viewportFraction: 0.9);
+    _controller = PageController(initialPage: currentPageIndex, keepPage: false, viewportFraction: 0.8);
     super.initState();
   }
 
@@ -26,6 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+     size = MediaQuery.of(context).size;
     return Container(
       padding: EdgeInsets.only(top: 24.0),
       width: double.infinity,
@@ -133,11 +135,18 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildMainScreen() {
-    return Column(
-      children: <Widget>[
-        _buildTopBar(),
-        _buildPageCarousel(),
-      ],
+    return AnimatedPositioned(
+      duration: Duration(milliseconds: 500),
+      top: isDrawerOpen ? size.height * 0.2 : 0,
+      left: isDrawerOpen ? size.width * 0.2 : 0,
+      right: isDrawerOpen ? size.width * -0.6 : 0,
+      bottom: isDrawerOpen ? size.height * 0.2 : 0,
+      child: Column(
+        children: <Widget>[
+          _buildTopBar(),
+          _buildPageCarousel(),
+        ],
+      ),
     );
   }
 
@@ -148,9 +157,16 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Icon(
-              Icons.sort,
-              color: Colors.white,
+            InkWell(
+              onTap: (){
+                setState(() {
+                  isDrawerOpen = !isDrawerOpen;
+                });
+              },
+              child: Icon(
+                Icons.sort,
+                color: Colors.white,
+              ),
             ),
             Text(
               'My Cards',
@@ -168,7 +184,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   _buildPageCarousel() {
     return Container(
-        height: 250.0,
         decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(20.0))),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
