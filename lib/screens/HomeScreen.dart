@@ -215,6 +215,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
+            // carousel container
             Container(
                 margin: EdgeInsets.only(top: 10.0),
                 height: 180.0,
@@ -233,6 +234,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             SizedBox(
               height: 10.0,
             ),
+            // three dots indicator
             Container(
               child: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -249,9 +251,78 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                   _buildSingleDot(currentPageIndex == 2 ? Colors.blue : Colors.blue.withOpacity(0.4)),
                 ],
               ),
+            ),
+            SizedBox(
+              height: 20.0,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(
+                    'Transactions',
+                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 18.0),
+                  ),
+                  Center(child: Icon(Icons.swap_horiz, color: Colors.white.withOpacity(0.75))),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 10.0,
+            ),
+            // listview
+            Container(
+              padding: EdgeInsets.only(left: 10.0, right: 10.0),
+              child: ListView.builder(
+                shrinkWrap: true,
+                primary: true,
+                itemCount: 20,
+                itemBuilder: (BuildContext context, int index) {
+                  return _buildListItem(index);
+                },
+              ),
             )
           ],
         ));
+  }
+
+  Widget _buildListItem(int index) {
+    return Container(
+      margin: EdgeInsets.only(bottom: 10.0),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+//          boxShadow: [BoxShadow(offset: Offset(0, 3), spreadRadius: 6, color: Colors.grey)]
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              // icon
+              Container(
+                width: 30.0,
+                height: 30.0,
+                decoration: BoxDecoration(shape: BoxShape.circle, color: Color(0xff33333c)),
+                child: Icon(
+                  Icons.confirmation_number,
+                  size: 16.0,
+                  color: Colors.white,
+                ),
+              ),
+              SizedBox(width: 40.0,),
+              Text(
+                'Apple',
+                style: TextStyle(color: Colors.white, fontWeight: FontWeight.w900),
+              ),
+            ],
+          ),
+          Text('+120 ₹', style: TextStyle(color: Colors.green, fontWeight: FontWeight.w900))
+        ],
+      ),
+    );
   }
 
   _buildCarouselContainer(int index) {
@@ -275,12 +346,12 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           decoration: BoxDecoration(color: Colors.deepPurpleAccent, borderRadius: BorderRadius.all(Radius.circular(20.0)))),
     );
   }
-}
 
-_buildSingleDot(Color color) {
-  return Container(
-    width: 10.0,
-    height: 10.0,
-    decoration: BoxDecoration(shape: BoxShape.circle, color: color),
-  );
+  _buildSingleDot(Color color) {
+    return Container(
+      width: 10.0,
+      height: 10.0,
+      decoration: BoxDecoration(shape: BoxShape.circle, color: color),
+    );
+  }
 }
