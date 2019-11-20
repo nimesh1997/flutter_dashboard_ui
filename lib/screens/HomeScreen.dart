@@ -7,27 +7,37 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMixin {
   bool isDrawerOpen = false;
   int currentPageIndex = 0;
   PageController _controller;
+  AnimationController _animationController;
+  Animation<Offset> _menuScreenAnimation;
+  Animation<double> _mainScreenAnimation;
   Size size;
 
   @override
   void initState() {
     _controller = PageController(initialPage: currentPageIndex, keepPage: false, viewportFraction: 0.8);
+    _animationController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 600),
+    );
+    _mainScreenAnimation = Tween<double>(begin: 1.0, end: 0.6).animate(_animationController);
+    _menuScreenAnimation = Tween<Offset>(begin: Offset(-1.0, 0.0), end: Offset(0.0, 0.0)).animate(_animationController);
     super.initState();
   }
 
   @override
   void dispose() {
     _controller.dispose();
+    _animationController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-     size = MediaQuery.of(context).size;
+    size = MediaQuery.of(context).size;
     return Container(
       padding: EdgeInsets.only(top: 24.0),
       width: double.infinity,
@@ -35,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
       color: const Color(0xff4A4A58),
       child: Stack(
         children: <Widget>[
-//          _buildMenu(),
+          _buildMenu(),
           _buildMainScreen(),
         ],
       ),
@@ -43,109 +53,120 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildMenu() {
-    return Padding(
-      padding: EdgeInsets.only(
-        left: 20.0,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Container(
-            width: 80.0,
-            height: 80.0,
-            decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.white),
-            child: Center(
-              child: Text('A', style: TextStyle(color: Color(0xff4A4A58), fontWeight: FontWeight.w900, fontSize: 24.0)),
+    return SlideTransition(
+      position: _menuScreenAnimation,
+      child: Padding(
+        padding: EdgeInsets.only(
+          left: 20.0,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              width: 80.0,
+              height: 80.0,
+              decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.white),
+              child: Center(
+                child: Text('A', style: TextStyle(color: Color(0xff4A4A58), fontWeight: FontWeight.w900, fontSize: 24.0)),
+              ),
             ),
-          ),
-          SizedBox(height: 20.0),
-          Text(
-            'Alex Benjaminn',
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.w900),
-          ),
-          SizedBox(height: 5.0),
-          Text(
-            'San Francisco, CA',
-            style: TextStyle(color: Colors.white.withOpacity(0.6), fontWeight: FontWeight.w400),
-          ),
-          SizedBox(height: 35.0),
-          Row(
-            children: <Widget>[
-              Icon(Icons.account_balance_wallet, color: Colors.white, size: 16.0),
-              SizedBox(
-                width: 5.0,
-              ),
-              Text(
-                'Dashboard',
-                style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
-              ),
-            ],
-          ),
-          SizedBox(height: 15.0),
-          Row(
-            children: <Widget>[
-              Icon(Icons.library_books, color: Colors.white, size: 16.0),
-              SizedBox(
-                width: 5.0,
-              ),
-              Text(
-                'Utility Bills',
-                style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
-              ),
-            ],
-          ),
-          SizedBox(height: 15.0),
-          Row(
-            children: <Widget>[
-              Icon(
-                Icons.swap_horiz,
-                color: Colors.white,
-                size: 16.0,
-              ),
-              SizedBox(
-                width: 5.0,
-              ),
-              Text(
-                'Funds Transfer',
-                style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
-              ),
-            ],
-          ),
-          SizedBox(height: 15.0),
-          Row(
-            children: <Widget>[
-              Icon(
-                Icons.business,
-                color: Colors.white,
-                size: 16.0,
-              ),
-              SizedBox(
-                width: 5.0,
-              ),
-              Text(
-                'Branches',
-                style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
-              ),
-            ],
-          ),
-        ],
+            SizedBox(height: 20.0),
+            Text(
+              'Alex Benjaminn',
+              style: TextStyle(color: Colors.white, fontWeight: FontWeight.w900),
+            ),
+            SizedBox(height: 5.0),
+            Text(
+              'San Francisco, CA',
+              style: TextStyle(color: Colors.white.withOpacity(0.6), fontWeight: FontWeight.w400),
+            ),
+            SizedBox(height: 35.0),
+            Row(
+              children: <Widget>[
+                Icon(Icons.account_balance_wallet, color: Colors.white, size: 16.0),
+                SizedBox(
+                  width: 5.0,
+                ),
+                Text(
+                  'Dashboard',
+                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
+                ),
+              ],
+            ),
+            SizedBox(height: 15.0),
+            Row(
+              children: <Widget>[
+                Icon(Icons.library_books, color: Colors.white, size: 16.0),
+                SizedBox(
+                  width: 5.0,
+                ),
+                Text(
+                  'Utility Bills',
+                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
+                ),
+              ],
+            ),
+            SizedBox(height: 15.0),
+            Row(
+              children: <Widget>[
+                Icon(
+                  Icons.swap_horiz,
+                  color: Colors.white,
+                  size: 16.0,
+                ),
+                SizedBox(
+                  width: 5.0,
+                ),
+                Text(
+                  'Funds Transfer',
+                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
+                ),
+              ],
+            ),
+            SizedBox(height: 15.0),
+            Row(
+              children: <Widget>[
+                Icon(
+                  Icons.business,
+                  color: Colors.white,
+                  size: 16.0,
+                ),
+                SizedBox(
+                  width: 5.0,
+                ),
+                Text(
+                  'Branches',
+                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
 
   Widget _buildMainScreen() {
     return AnimatedPositioned(
-      duration: Duration(milliseconds: 500),
-      top: isDrawerOpen ? size.height * 0.2 : 0,
-      left: isDrawerOpen ? size.width * 0.2 : 0,
-      right: isDrawerOpen ? size.width * -0.6 : 0,
-      bottom: isDrawerOpen ? size.height * 0.2 : 0,
-      child: Column(
-        children: <Widget>[
-          _buildTopBar(),
-          _buildPageCarousel(),
-        ],
+      duration: Duration(milliseconds: 600),
+      left: isDrawerOpen ? size.width * 0.5 : 0,
+      right: isDrawerOpen ? size.width * -0.4 : 0,
+      top: 0.0,
+      bottom: 0.0,
+      child: ScaleTransition(
+        scale: _mainScreenAnimation,
+        child: Material(
+          borderRadius: isDrawerOpen ? BorderRadius.all(Radius.circular(20.0)) : BorderRadius.all(Radius.circular(0)),
+          color: const Color(0xff4A4A58),
+          elevation: 6.0,
+          child: Column(
+            children: <Widget>[
+              _buildTopBar(),
+              _buildPageCarousel(),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -158,8 +179,13 @@ class _HomeScreenState extends State<HomeScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             InkWell(
-              onTap: (){
+              onTap: () {
                 setState(() {
+                  if (!isDrawerOpen) {
+                    _animationController.forward();
+                  } else {
+                    _animationController.reverse();
+                  }
                   isDrawerOpen = !isDrawerOpen;
                 });
               },
