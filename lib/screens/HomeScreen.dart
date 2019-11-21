@@ -45,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       color: const Color(0xff4A4A58),
       child: Stack(
         children: <Widget>[
-          _buildMenu(),
+//          _buildMenu(),
           _buildMainScreen(),
         ],
       ),
@@ -164,6 +164,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             children: <Widget>[
               _buildTopBar(),
               _buildPageCarousel(),
+              _buildTransactionList(),
             ],
           ),
         ),
@@ -208,84 +209,94 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     );
   }
 
-  _buildPageCarousel() {
-    return Container(
-        decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(20.0))),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            // carousel container
-            Container(
-                margin: EdgeInsets.only(top: 10.0),
-                height: 180.0,
-                child: PageView.builder(
-                    itemCount: 3,
-                    onPageChanged: (page) {
-                      setState(() {
-                        currentPageIndex = page;
-                      });
-                    },
-                    physics: BouncingScrollPhysics(),
-                    controller: _controller,
-                    itemBuilder: (BuildContext context, int index) {
-                      return _buildCarouselContainer(index);
-                    })),
-            SizedBox(
-              height: 10.0,
-            ),
-            // three dots indicator
-            Container(
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  _buildSingleDot(currentPageIndex == 0 ? Colors.blue : Colors.blue.withOpacity(0.4)),
-                  SizedBox(
-                    width: 5.0,
-                  ),
-                  _buildSingleDot(currentPageIndex == 1 ? Colors.blue : Colors.blue.withOpacity(0.4)),
-                  SizedBox(
-                    width: 5.0,
-                  ),
-                  _buildSingleDot(currentPageIndex == 2 ? Colors.blue : Colors.blue.withOpacity(0.4)),
-                ],
+  Widget _buildPageCarousel() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: <Widget>[
+        // carousel container
+        Container(
+            margin: EdgeInsets.only(top: 10.0),
+            height: 180.0,
+            child: PageView.builder(
+                itemCount: 3,
+                onPageChanged: (page) {
+                  setState(() {
+                    currentPageIndex = page;
+                  });
+                },
+                physics: BouncingScrollPhysics(),
+                controller: _controller,
+                itemBuilder: (BuildContext context, int index) {
+                  return _buildCarouselContainer(index);
+                })),
+        SizedBox(
+          height: 10.0,
+        ),
+        // three dots indicator
+        Container(
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              _buildSingleDot(currentPageIndex == 0 ? Colors.blue : Colors.blue.withOpacity(0.4)),
+              SizedBox(
+                width: 5.0,
               ),
-            ),
-            SizedBox(
-              height: 20.0,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    'Transactions',
-                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 18.0),
-                  ),
-                  Center(child: Icon(Icons.swap_horiz, color: Colors.white.withOpacity(0.75))),
-                ],
+              _buildSingleDot(currentPageIndex == 1 ? Colors.blue : Colors.blue.withOpacity(0.4)),
+              SizedBox(
+                width: 5.0,
               ),
+              _buildSingleDot(currentPageIndex == 2 ? Colors.blue : Colors.blue.withOpacity(0.4)),
+            ],
+          ),
+        ),
+        SizedBox(
+          height: 20.0,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildTransactionList(){
+    return Expanded(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text(
+                  'Transactions',
+                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 18.0),
+                ),
+                Icon(Icons.swap_horiz, color: Colors.white.withOpacity(0.75)),
+              ],
             ),
-            SizedBox(
-              height: 10.0,
-            ),
-            // listview
-            Container(
+          ),
+          SizedBox(
+            height: 10.0,
+          ),
+          // listView
+          Expanded(
+            child: Padding(
               padding: EdgeInsets.only(left: 10.0, right: 10.0),
               child: ListView.builder(
                 shrinkWrap: true,
-                primary: true,
                 itemCount: 20,
                 itemBuilder: (BuildContext context, int index) {
                   return _buildListItem(index);
                 },
               ),
-            )
-          ],
-        ));
+            ),
+          )
+        ],
+      ),
+    );
+
   }
 
   Widget _buildListItem(int index) {
