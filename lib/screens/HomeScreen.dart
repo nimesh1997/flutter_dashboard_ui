@@ -60,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           left: 20.0,
         ),
         child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             SizedBox(),
             Column(
@@ -394,16 +394,116 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
         );
       },
       child: Container(
-          margin: (index != 0 || index != 2) ? EdgeInsets.only(right: 10.0) : EdgeInsets.all(0.0),
-          decoration: BoxDecoration(color: Colors.deepPurpleAccent, borderRadius: BorderRadius.all(Radius.circular(20.0)))),
+        child: Stack(
+          children: <Widget>[
+            Container(
+              alignment: Alignment.centerRight,
+              margin: (index != 0 || index != 2) ? EdgeInsets.only(right: 10.0) : EdgeInsets.all(0.0),
+              decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(20.0))),
+              child: Image.asset(
+                'assets/images/design.png',
+                fit: BoxFit.scaleDown,
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.all(10.0),
+              height: double.maxFinite,
+              margin: (index != 0 || index != 2) ? EdgeInsets.only(right: 10.0) : EdgeInsets.all(0.0),
+              decoration: BoxDecoration(color: Colors.deepPurpleAccent.withOpacity(0.40), borderRadius: BorderRadius.all(Radius.circular(20.0))),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        'Current Balance',
+                        style: TextStyle(color: Colors.white.withOpacity(0.55)),
+                      ),
+                      Text(
+                        'Bank X',
+                        style: TextStyle(color: Colors.white.withOpacity(0.75), fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                  Text(
+                    '₹ 1000.00',
+                    style: TextStyle(color: Colors.white.withOpacity(0.75), fontSize: 18.0, fontWeight: FontWeight.bold),
+                  ),
+                  Row(
+                    children: _buildCardNumber(),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            'Card Holder',
+                            style: TextStyle(color: Colors.white.withOpacity(0.55), fontSize: 12.0, fontWeight: FontWeight.w400),
+                          ),
+                          Text('Alex Benjamin', style: TextStyle(color: Colors.white.withOpacity(0.75), fontSize: 12.0, fontWeight: FontWeight.w400))
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            'Expires',
+                            textScaleFactor: 1.0,
+                            style: TextStyle(color: Colors.white.withOpacity(0.55), fontSize: 12.0, fontWeight: FontWeight.w400),
+                          ),
+                          Text('05 / 20',
+                              textScaleFactor: 1.0,
+                              style: TextStyle(color: Colors.white.withOpacity(0.75), fontSize: 12.0, fontWeight: FontWeight.w400))
+                        ],
+                      )
+                    ],
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 
+  List<Widget> _buildCardNumber() {
+    List<Widget> numberList = <Widget>[];
+    for (int i = 1; i <= 15; i++) {
+      if (i % 5 != 0) {
+        numberList.add(Text(
+          '*',
+          style: TextStyle(letterSpacing: 1.2, color: Colors.white.withOpacity(0.75), fontWeight: FontWeight.bold),
+        ));
+      } else {
+        numberList.add(SizedBox(
+          width: 5.0,
+        ));
+      }
+    }
+    //dummy
+    for (int i = 1; i <= 4; i++) {
+      numberList.add(Text(
+        i.toString(),
+        style: TextStyle(letterSpacing: 1.2, color: Colors.white.withOpacity(0.75), fontWeight: FontWeight.bold),
+      ));
+    }
+    return numberList;
+  }
+
   /// dummy
-  Widget _buildDateTime(int index){
-    if(index % 5 == 0){
-      return Text('18-Nov-19 ', style: TextStyle(color: Colors.white.withOpacity(0.75), fontWeight: FontWeight.w600, fontSize: 14.0),);
-    }else{
+  Widget _buildDateTime(int index) {
+    if (index % 5 == 0) {
+      return Text(
+        '18-Nov-19 ',
+        style: TextStyle(color: Colors.white.withOpacity(0.75), fontWeight: FontWeight.w600, fontSize: 14.0),
+      );
+    } else {
       return SizedBox();
     }
   }
