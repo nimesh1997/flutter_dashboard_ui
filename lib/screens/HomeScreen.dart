@@ -258,7 +258,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     );
   }
 
-  Widget _buildTransactionList(){
+  Widget _buildTransactionList() {
     return Expanded(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -283,7 +283,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           // listView
           Expanded(
             child: Padding(
-              padding: EdgeInsets.only(left: 10.0, right: 10.0),
+              padding: EdgeInsets.only(left: 0.0, right: 0.0),
               child: ListView.builder(
                 shrinkWrap: true,
                 itemCount: 20,
@@ -296,16 +296,16 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
         ],
       ),
     );
-
   }
 
   Widget _buildListItem(int index) {
     return Container(
-      margin: EdgeInsets.only(bottom: 10.0),
+      height: 40.0,
+      margin: EdgeInsets.only(left: 10.0, bottom: 15.0, right: 10.0),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(20)),
-//          boxShadow: [BoxShadow(offset: Offset(0, 3), spreadRadius: 6, color: Colors.grey)]
-      ),
+          color: Color(0xff4A4A58),
+          boxShadow: [BoxShadow(offset: Offset(0, 4), blurRadius: 4, color: Color(0xff3e3e4a))]),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -314,23 +314,29 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             children: <Widget>[
               // icon
               Container(
+                margin: EdgeInsets.only(left: 10.0),
                 width: 30.0,
                 height: 30.0,
-                decoration: BoxDecoration(shape: BoxShape.circle, color: Color(0xff33333c)),
+                decoration: BoxDecoration(shape: BoxShape.circle, color: Color(0xff3e3e4a)),
                 child: Icon(
                   Icons.confirmation_number,
                   size: 16.0,
                   color: Colors.white,
                 ),
               ),
-              SizedBox(width: 40.0,),
+              SizedBox(
+                width: 40.0,
+              ),
               Text(
                 'Apple',
                 style: TextStyle(color: Colors.white, fontWeight: FontWeight.w900),
               ),
             ],
           ),
-          Text('+120 ₹', style: TextStyle(color: Colors.green, fontWeight: FontWeight.w900))
+          Padding(
+            padding: const EdgeInsets.only(right: 10.0),
+            child: Text('+120 ₹', style: TextStyle(color: Colors.green, fontWeight: FontWeight.w900)),
+          )
         ],
       ),
     );
