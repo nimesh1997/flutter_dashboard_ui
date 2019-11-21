@@ -300,12 +300,12 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
   Widget _buildListItem(int index) {
     return Container(
-      height: 40.0,
+      height: 60.0,
       margin: EdgeInsets.only(left: 10.0, bottom: 15.0, right: 10.0),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(20)),
           color: Color(0xff4A4A58),
-          boxShadow: [BoxShadow(offset: Offset(0, 4), blurRadius: 4, color: Color(0xff3e3e4a))]),
+          boxShadow: [BoxShadow(offset: Offset(0, 3), blurRadius: 4, color: Color(0xff3e3e4a))]),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
