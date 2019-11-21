@@ -45,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       color: const Color(0xff4A4A58),
       child: Stack(
         children: <Widget>[
-//          _buildMenu(),
+          _buildMenu(),
           _buildMainScreen(),
         ],
       ),
