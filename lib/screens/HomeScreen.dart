@@ -60,86 +60,111 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           left: 20.0,
         ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Container(
-              width: 80.0,
-              height: 80.0,
-              decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.white),
-              child: Center(
-                child: Text('A', style: TextStyle(color: Color(0xff4A4A58), fontWeight: FontWeight.w900, fontSize: 24.0)),
+            SizedBox(),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                  width: 80.0,
+                  height: 80.0,
+                  decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.white),
+                  child: Center(
+                    child: Text('A', style: TextStyle(color: Color(0xff4A4A58), fontWeight: FontWeight.w900, fontSize: 24.0)),
+                  ),
+                ),
+                SizedBox(height: 20.0),
+                Text(
+                  'Alex Benjaminn',
+                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.w900),
+                ),
+                SizedBox(height: 5.0),
+                Text(
+                  'San Francisco, CA',
+                  style: TextStyle(color: Colors.white.withOpacity(0.6), fontWeight: FontWeight.w400),
+                ),
+                SizedBox(height: 35.0),
+                Row(
+                  children: <Widget>[
+                    Icon(Icons.account_balance_wallet, color: Colors.white, size: 16.0),
+                    SizedBox(
+                      width: 5.0,
+                    ),
+                    Text(
+                      'Dashboard',
+                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 15.0),
+                Row(
+                  children: <Widget>[
+                    Icon(Icons.library_books, color: Colors.white, size: 16.0),
+                    SizedBox(
+                      width: 5.0,
+                    ),
+                    Text(
+                      'Utility Bills',
+                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 15.0),
+                Row(
+                  children: <Widget>[
+                    Icon(
+                      Icons.swap_horiz,
+                      color: Colors.white,
+                      size: 16.0,
+                    ),
+                    SizedBox(
+                      width: 5.0,
+                    ),
+                    Text(
+                      'Funds Transfer',
+                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 15.0),
+                Row(
+                  children: <Widget>[
+                    Icon(
+                      Icons.business,
+                      color: Colors.white,
+                      size: 16.0,
+                    ),
+                    SizedBox(
+                      width: 5.0,
+                    ),
+                    Text(
+                      'Branches',
+                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 20.0),
+              child: Row(
+                children: <Widget>[
+                  Icon(
+                    Icons.assignment_return,
+                    color: Colors.white,
+                    size: 16.0,
+                  ),
+                  SizedBox(
+                    width: 5.0,
+                  ),
+                  Text(
+                    'Log out',
+                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
+                  ),
+                ],
               ),
-            ),
-            SizedBox(height: 20.0),
-            Text(
-              'Alex Benjaminn',
-              style: TextStyle(color: Colors.white, fontWeight: FontWeight.w900),
-            ),
-            SizedBox(height: 5.0),
-            Text(
-              'San Francisco, CA',
-              style: TextStyle(color: Colors.white.withOpacity(0.6), fontWeight: FontWeight.w400),
-            ),
-            SizedBox(height: 35.0),
-            Row(
-              children: <Widget>[
-                Icon(Icons.account_balance_wallet, color: Colors.white, size: 16.0),
-                SizedBox(
-                  width: 5.0,
-                ),
-                Text(
-                  'Dashboard',
-                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
-                ),
-              ],
-            ),
-            SizedBox(height: 15.0),
-            Row(
-              children: <Widget>[
-                Icon(Icons.library_books, color: Colors.white, size: 16.0),
-                SizedBox(
-                  width: 5.0,
-                ),
-                Text(
-                  'Utility Bills',
-                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
-                ),
-              ],
-            ),
-            SizedBox(height: 15.0),
-            Row(
-              children: <Widget>[
-                Icon(
-                  Icons.swap_horiz,
-                  color: Colors.white,
-                  size: 16.0,
-                ),
-                SizedBox(
-                  width: 5.0,
-                ),
-                Text(
-                  'Funds Transfer',
-                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
-                ),
-              ],
-            ),
-            SizedBox(height: 15.0),
-            Row(
-              children: <Widget>[
-                Icon(
-                  Icons.business,
-                  color: Colors.white,
-                  size: 16.0,
-                ),
-                SizedBox(
-                  width: 5.0,
-                ),
-                Text(
-                  'Branches',
-                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
-                ),
-              ],
             ),
           ],
         ),
@@ -299,46 +324,56 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   }
 
   Widget _buildListItem(int index) {
-    return Container(
-      height: 60.0,
-      margin: EdgeInsets.only(left: 10.0, bottom: 15.0, right: 10.0),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(20)),
-          color: Color(0xff4A4A58),
-          boxShadow: [BoxShadow(offset: Offset(0, 3), blurRadius: 4, color: Color(0xff3e3e4a))]),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Row(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+          child: _buildDateTime(index),
+        ),
+        // list row item
+        Container(
+          height: 60.0,
+          margin: EdgeInsets.only(left: 10.0, bottom: 15.0, right: 10.0),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+              color: Color(0xff4A4A58),
+              boxShadow: [BoxShadow(offset: Offset(0, 3), blurRadius: 4, color: Color(0xff3e3e4a))]),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              // icon
-              Container(
-                margin: EdgeInsets.only(left: 10.0),
-                width: 30.0,
-                height: 30.0,
-                decoration: BoxDecoration(shape: BoxShape.circle, color: Color(0xff3e3e4a)),
-                child: Icon(
-                  Icons.confirmation_number,
-                  size: 16.0,
-                  color: Colors.white,
-                ),
+              Row(
+                children: <Widget>[
+                  // icon
+                  Container(
+                    margin: EdgeInsets.only(left: 10.0),
+                    width: 30.0,
+                    height: 30.0,
+                    decoration: BoxDecoration(shape: BoxShape.circle, color: Color(0xff3e3e4a)),
+                    child: Icon(
+                      Icons.confirmation_number,
+                      size: 16.0,
+                      color: Colors.white,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 40.0,
+                  ),
+                  Text(
+                    'Apple',
+                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.w900),
+                  ),
+                ],
               ),
-              SizedBox(
-                width: 40.0,
-              ),
-              Text(
-                'Apple',
-                style: TextStyle(color: Colors.white, fontWeight: FontWeight.w900),
-              ),
+              Padding(
+                padding: const EdgeInsets.only(right: 10.0),
+                child: Text('+120 ₹', style: TextStyle(color: Colors.green, fontWeight: FontWeight.w900)),
+              )
             ],
           ),
-          Padding(
-            padding: const EdgeInsets.only(right: 10.0),
-            child: Text('+120 ₹', style: TextStyle(color: Colors.green, fontWeight: FontWeight.w900)),
-          )
-        ],
-      ),
+        )
+      ],
     );
   }
 
@@ -362,6 +397,15 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           margin: (index != 0 || index != 2) ? EdgeInsets.only(right: 10.0) : EdgeInsets.all(0.0),
           decoration: BoxDecoration(color: Colors.deepPurpleAccent, borderRadius: BorderRadius.all(Radius.circular(20.0)))),
     );
+  }
+
+  /// dummy
+  Widget _buildDateTime(int index){
+    if(index % 5 == 0){
+      return Text('18-Nov-19 ', style: TextStyle(color: Colors.white.withOpacity(0.75), fontWeight: FontWeight.w600, fontSize: 14.0),);
+    }else{
+      return SizedBox();
+    }
   }
 
   _buildSingleDot(Color color) {
